@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <title>Generate Barcode 317</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="icon/qrcode-solid.svg" type="image/x-icon">
+</head>
+<body>
+  <header class="main-header">
+    <!-- Baris Pertama: Greeting dan Dark Mode -->
+    <div class="top-header">
+      <div class="greeting" id="greeting"></div>
+
+      <!--div class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" id="dark-mode-toggle">
+          <span class="slider round"></span>
+        </label>
+        <span class="toggle-text">Dark Mode</span>
+      </div-->
+      
+      <!-- Button untuk Toggle Menu (Hanya tampil di layar kecil) -->
+      <button class="menu-toggle" id="menu-toggle">☰</button>
+    </div>
+  
+    <!-- Baris Kedua: Menu Navigasi -->
+    <nav class="nav-header" id="nav-header">
+      <ul>
+        <li><a href="index.html">Shop n Talk</a></li>
+        <!--li><a href="Sawer.html">Saweria</a></li-->
+        <li><a href="barcode.html">QR Code Generator</a></li>
+        <li><a href="security.html">Security Awareness</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="floating-nav">
+    <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i></a></li>
+        <li><a href="barcode.html"><i class="fas fa-qrcode"></i></a></li>
+        <li><a href="security.html"><i class="fas fa-lock"></i></a></li>
+    </ul>
+</div>
+
+  <!-- Main Content untuk QR Code Generator -->
+  <div class="main-content">
+    <div class="container">
+      <div class="header">
+        <h1>QR Code Generator 317</h1>
+      </div>
+
+      <!-- Row untuk form input dan tombol generate -->
+      <div class="row">
+        <div class="form-section">
+          <h2>User ID</h2>
+          <input type="text" id="input-name" placeholder="User ID..." required />
+        </div>
+        <div class="form-section">
+          <h2>Password</h2>
+          <input type="text" id="input-text" placeholder="Password..." required />
+        </div>
+      </div>
+
+      <button onclick="generateQRCode()">Generate QR Code</button>
+
+      <!-- Hasil QR Code -->
+      <div class="result-section">
+        <h2>Hasil</h2>
+        <div class="row">
+          <div id="result-user-id" class="qr-container"></div>
+          <div id="result-password" class="qr-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer dengan Animasi -->
+  <footer>
+    <div class="footer-content">
+      <p>© 2024 Berronntosaurus | BARCODE GENERATOR</p>
+      <div class="social-icons">
+        <a href="https://www.facebook.com/ag.prd" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.x.com/agnprdn" target="_blank"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.instagram.com/agprd12" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/6282318221577" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
