@@ -13,18 +13,6 @@ function greetUser() {
       greetingElement.textContent = "Selamat Malam!"; // Greeting untuk malam
     }
   }
-  
-  // Fungsi untuk menampilkan tanggal update secara dinamis
-//function setUpdateDate() {
-  //const updateDateElement = document.getElementById('update-date');
-  //if (updateDateElement) {
-     // const today = new Date();
-     // today.setDate(today.getDate() - 1);
-     // const options = { year: 'numeric', month: 'long', day: 'numeric' };
-     // const formattedDate = today.toLocaleDateString('id-ID', options); // Format tanggal sesuai Indonesia
-     // updateDateElement.textContent = `Update Per: ${formattedDate}`;
- // }
-//}
 
 // Pastikan fungsi ini dijalankan saat halaman selesai dimuat
 window.onload = function() {
