@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect Page</title>
+    <style>
+        /* Styling untuk menampilkan pesan di tengah halaman */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .message {
+            font-size: 150px;
+            font-weight: bold;
+            color: white;
+            white-space: nowrap;
+            position: absolute;
+            animation: grow-text 3s ease-in-out 1; /* Animasi teks berjalan dan pembesaran */
+        }
+
+        /* Animasi untuk teks yang membesar */
+        @keyframes grow-text {
+            0% {
+                transform: scale(0.1); /* Ukuran awal kecil */
+            }
+
+            100% {
+                transform: scale(1); /* Ukuran penuh */
+            }
+        }
+
+        /* Styling background */
+        body {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="message">Oh Iyalah!</div>
+
+    <script>
+        // Fungsi untuk menghasilkan warna RGB acak
+        function getRandomRGB() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // Mengubah background color setiap 1 detik
+        setInterval(function() {
+            document.body.style.backgroundColor = getRandomRGB();
+        }, 100); // Interval setiap 1000ms = 1 detik
+
+        // Mengubah teks setelah 1.5 detik
+        setTimeout(function() {
+            document.querySelector('.message').textContent = "Terus?";
+        }, 1300); // Ganti teks setelah 1500ms (1.5 detik)
+
+        // Mengarahkan pengguna ke halaman login setelah 3 detik
+        setTimeout(function() {
+            window.location.href = "https://pbs.twimg.com/media/DG5-UZgUwAEBntw.jpg"; // Ganti dengan URL login.php kamu
+        }, 3500); // 3000ms = 3 detik
+    </script>
+</body>
+
+</html>
