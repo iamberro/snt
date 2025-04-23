@@ -1,82 +1,509 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  <title>Shop and Talk</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="icon/house-solid.svg" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report SNT View</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Header with theme toggle */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .greeting {
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+
+        .dark-mode .theme-toggle {
+            color: var(--light);
+        }
+
+        /* Main content */
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: inherit;
+        }
+
+        /* Image container */
+        .image-wrapper {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transform: scale(0.95);
+            opacity: 0;
+            animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 0.6s;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .image-wrapper:hover {
+            transform: scale(1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.3), rgba(247, 37, 133, 0.3));
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1;
+        }
+
+        .image-wrapper:hover::before {
+            opacity: 1;
+        }
+
+        .main-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .image-wrapper:hover .main-image {
+            transform: scale(1.05);
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 2;
+            color: var(--dark);
+        }
+
+        .dark-mode .image-caption {
+            color: var(--light);
+        }
+
+        .image-wrapper:hover .image-caption {
+            bottom: 20px;
+            opacity: 1;
+        }
+
+        /* Fullscreen style */
+        .fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .fullscreen.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .fullscreen img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            animation: lightboxFadeIn 0.5s ease-out;
+        }
+
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            z-index: 1001;
+        }
+
+        .close-fullscreen:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: scale(1.1);
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite linear;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+            animation-delay: 0.9s;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links a {
+            color: inherit;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes lightboxFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .greeting {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header class="main-header">
-    <!-- Baris Pertama: Greeting dan Dark Mode -->
-    <div class="top-header">
-      <div class="greeting" id="greeting"></div>
+    <!-- Floating particles -->
+    <div class="particles" id="particles"></div>
 
-      <!--div class="toggle-container">
-        <label class="switch">
-          <input type="checkbox" id="dark-mode-toggle">
-          <span class="slider round"></span>
-        </label>
-        <span class="toggle-text">Dark Mode</span>
-      </div-->
-      
-      <!-- Button untuk Toggle Menu (Hanya tampil di layar kecil) -->
-      <button class="menu-toggle" id="menu-toggle">☰</button>
+    <div class="container">
+        <header>
+            <div class="greeting" id="greeting">Good Morning!</div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <main>
+            <div class="hero">
+                <h1>Report SNT MDS Citimall Dumai 317</h1>
+                <p>Periode 22 April 2025</p>
+            </div>
+
+            <div class="image-wrapper" id="imageWrapper">
+                <img src="SNT.png" alt="Sales Data Visualization" class="main-image" id="mainImage">
+                <div class="image-caption">Click to view full screen</div>
+            </div>
+        </main>
+        
+        <footer>
+            <div class="social-links">
+                <a href="https://api.whatsapp.com/send/?phone=6282318221577&text=%2ABer%2C+belum+update+ni+SNT+nya.%0ABoleh+bantu+di+update%3F%0ATerimakasih.&type=phone_number&app_absent=0"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://instagram.com/sir.berro"><i class="fab fa-instagram"></i></a>
+                <a href="https://x.com/agnprdn"><i class="fab fa-twitter"></i></a>
+                <a href="https://facebook.com/ag.prd"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.linkedin.com/in/agung-pradana-284387262/"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/iamberro"><i class="fab fa-github"></i></a>
+            </div>
+            <p>&copy; 2025 Berrontosaurus as sir.berro.</p>
+        </footer>
     </div>
 
-    <!-- Baris Kedua: Menu Navigasi -->
-    <nav class="nav-header" id="nav-header">
-      <ul>
-        <li><a href="index.html">Shop n Talk</a></li>
-        <!--li><a href="Sawer.html">Saweria</a></li-->
-        <li><a href="barcode.html">QR Code Generator</a></li>
-        <li><a href="security.html">Security Awareness</a></li>
-      </ul>
-    </nav>
-  </header>
-  
-  <div class="floating-nav">
-    <ul>
-        <li><a href="index.html"><i class="fas fa-home"></i></a></li>
-        <li><a href="barcode.html"><i class="fas fa-qrcode"></i></a></li>
-        <li><a href="security.html"><i class="fas fa-lock"></i></a></li>
-    </ul>
-</div>
-
-  <!-- Update Info Section -->
-    <section class="update-info">
-      <p id="update-date">Update Per : 29 Maret 2025</p>
-      <p id="contact-info">
-        Jika belum update, hubungi EDP: 
-        <a href="https://wa.me/6282318221577" target="_blank" id="whatsapp-icon">
-          <i class="fab fa-whatsapp"></i>
-        </a>
-      </p>
-    </section>
-
-  <main> 
-    <!-- Image Section -->
-    <section class="image-container">
-      <a href="SNT.png" target="_blank">
-        <img src="SNT.png" alt="Shop n Talk Logo">
-      </a>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-content">
-      <p>© 2024 Berronntosaurus | SNT Update</p>
-      <div class="social-icons">
-        <a href="https://www.facebook.com/ag.prd" target="_blank"><i class="fab fa-facebook"></i></a>
-        <a href="https://www.x.com/agnprdn" target="_blank"><i class="fab fa-twitter"></i></a>
-        <a href="https://www.instagram.com/agprd12" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://wa.me/6282318221577" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      </div>
+    <!-- Fullscreen element -->
+    <div class="fullscreen" id="fullscreenView">
+        <img src="" alt="Fullscreen view" id="fullscreenImage">
+        <div class="close-fullscreen" id="closeFullscreen">&times;</div>
     </div>
-  </footer>
 
-  <script src="script.js"></script>
+    <script>
+        // Dynamic greeting based on time of day
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            const greeting = document.getElementById('greeting');
+            
+            if (hour < 12) {
+                greeting.textContent = 'Selamat Pagi, teman!';
+            } else if (hour < 18) {
+                greeting.textContent = 'Selamt Siang, teman!';
+            } else {
+                greeting.textContent = 'Selamat Malam, teman!';
+            }
+        }
+
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // Fullscreen functionality
+        const mainImage = document.getElementById('mainImage');
+        const imageWrapper = document.getElementById('imageWrapper');
+        const fullscreenView = document.getElementById('fullscreenView');
+        const fullscreenImage = document.getElementById('fullscreenImage');
+        const closeFullscreen = document.getElementById('closeFullscreen');
+        
+        // Open fullscreen
+        function openFullscreen(imgSrc) {
+            fullscreenImage.src = imgSrc;
+            fullscreenView.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close fullscreen
+        function closeFullscreenHandler() {
+            fullscreenView.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Event listeners
+        mainImage.addEventListener('click', function() {
+            openFullscreen(this.src);
+        });
+        
+        imageWrapper.addEventListener('click', function(e) {
+            if (e.target === this) {
+                openFullscreen(mainImage.src);
+            }
+        });
+        
+        closeFullscreen.addEventListener('click', closeFullscreenHandler);
+        
+        fullscreenView.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFullscreenHandler();
+            }
+        });
+        
+        // ESC key to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && fullscreenView.classList.contains('active')) {
+                closeFullscreenHandler();
+            }
+        });
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 15 : 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 5px and 20px
+                const size = Math.random() * 15 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animation = `float ${duration}s ${delay}s infinite linear`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize everything when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            updateGreeting();
+            createParticles();
+            
+            // Update greeting every minute in case page stays open
+            setInterval(updateGreeting, 60000);
+            
+            // Debugging - make sure elements are clickable
+            console.log("Main image:", mainImage);
+            console.log("Image wrapper:", imageWrapper);
+            mainImage.style.pointerEvents = 'auto';
+            imageWrapper.style.pointerEvents = 'auto';
+        });
+    </script>
 </body>
 </html>
