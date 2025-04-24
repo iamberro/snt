@@ -77,7 +77,7 @@
             border: 1px solid rgba(255,255,255,0.1);
             transition: var(--transition);
             transform-style: preserve-3d;
-            animation: float 8s ease-in-out infinite;
+            animation: breathe 8s ease-in-out infinite;
             z-index: 10;
             backdrop-filter: blur(5px);
             background: rgba(30, 30, 30, 0.8);
@@ -243,11 +243,11 @@
             box-shadow: 
                 0 20px 50px rgba(0, 0, 0, 0.3),
                 var(--neon-glow);
-            transform: scale(0.95) rotateY(10deg);
+            transform: scale(0.95);
             opacity: 0;
             animation: 
                 zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
-                float 6s ease-in-out infinite;
+                breathe 6s ease-in-out infinite;
             animation-delay: 0.6s, 1.4s;
             transition: var(--transition);
             cursor: pointer;
@@ -255,7 +255,6 @@
             background-color: rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 2;
-            transform-style: preserve-3d;
         }
 
         .light-mode .image-wrapper {
@@ -277,7 +276,7 @@
         }
 
         .image-wrapper:hover {
-            transform: scale(1) rotateY(0deg);
+            transform: scale(1);
             box-shadow: 
                 0 30px 70px rgba(0, 0, 0, 0.5),
                 0 0 30px rgba(0, 230, 118, 0.8),
@@ -294,12 +293,11 @@
             display: block;
             cursor: pointer;
             transition: var(--transition);
-            transform: translateZ(20px);
             filter: brightness(0.95) contrast(1.05);
         }
 
         .image-wrapper:hover .main-image {
-            transform: scale(1.03) translateZ(30px);
+            transform: scale(1.03);
             filter: brightness(1) contrast(1.1);
         }
 
@@ -322,7 +320,6 @@
             backdrop-filter: blur(5px);
             border: 1px solid rgba(0, 230, 118, 0.3);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            transform: translateZ(10px);
         }
 
         .light-mode .image-caption {
@@ -334,7 +331,6 @@
         .image-wrapper:hover .image-caption {
             bottom: 30px;
             opacity: 1;
-            transform: translateZ(20px);
         }
 
         /* 3D floating elements */
@@ -640,17 +636,17 @@
         @keyframes zoomIn {
             from {
                 opacity: 0;
-                transform: scale(0.95) rotateY(10deg);
+                transform: scale(0.95);
             }
             to {
                 opacity: 1;
-                transform: scale(1) rotateY(0deg);
+                transform: scale(1);
             }
         }
 
         @keyframes lightboxFadeIn {
-            from { opacity: 0; transform: scale(0.9) rotateY(10deg); }
-            to { opacity: 1; transform: scale(1) rotateY(0deg); }
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         @keyframes pulse {
@@ -659,10 +655,10 @@
             100% { transform: scale(1); }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px) rotateY(0deg); }
-            50% { transform: translateY(-20px) rotateY(5deg); }
-            100% { transform: translateY(0px) rotateY(0deg); }
+        @keyframes breathe {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
 
         @keyframes expandLine {
@@ -782,8 +778,7 @@
         <main>
             <div class="hero">
                 <h1>Report SNT MDS Citimall Dumai 317</h1>
-                <p>Advanced Data Visualization with Interactive Analytics</p>
-                <div class="date-badge">Periode 22 April 2025</div>
+                <div class="date-badge">Periode 23 April 2025</div>
             </div>
 
             <!--div class="data-cards">
@@ -1030,10 +1025,10 @@
             particlesJS('particles-js', {
                 "particles": {
                     "number": {
-                        "value": 80,
+                        "value": 1,
                         "density": {
                             "enable": true,
-                            "value_area": 800
+                            "value_area": 10
                         }
                     },
                     "color": {
@@ -1214,14 +1209,6 @@
             
             // Update greeting every minute in case page stays open
             setInterval(updateGreeting, 60000);
-            
-            // Add parallax effect
-            document.addEventListener('mousemove', function(e) {
-                const container = document.querySelector('.container');
-                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-                container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-            });
         });
     </script>
 </body>
