@@ -10,7 +10,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report SNT View | Ultra Edition</title>
+    <title>Report SNT View</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -331,6 +331,50 @@
         .image-wrapper:hover .image-caption {
             bottom: 30px;
             opacity: 1;
+        }
+
+        /* Image action buttons */
+        .image-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+            animation-delay: 0.9s;
+        }
+
+        .action-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
+
+        .share-btn {
+            background: linear-gradient(135deg, var(--accent), #ff6d00);
+            color: white;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-btn i {
+            font-size: 1.2rem;
         }
 
         /* 3D floating elements */
@@ -722,6 +766,11 @@
             .data-cards {
                 grid-template-columns: 1fr;
             }
+            
+            .image-actions {
+                flex-direction: column;
+                align-items: center;
+            }
         }
 
         @media (max-width: 480px) {
@@ -754,6 +803,11 @@
                 height: 50px;
                 font-size: 1.2rem;
             }
+            
+            .action-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -779,6 +833,15 @@
             <div class="hero">
                 <h1>Report SNT MDS Citimall Dumai 317</h1>
                 <div class="date-badge">Periode 23 April 2025</div>
+                            <!-- Image action buttons -->
+                <div class="image-actions">
+                    <button class="action-btn download-btn" id="downloadBtn">
+                        <i class="fas fa-download"></i> Download Gambar
+                    </button>
+                    <button class="action-btn share-btn" id="shareBtn">
+                        <i class="fas fa-share-alt"></i> Share Gambar
+                    </button>
+                </div>
             </div>
 
             <!--div class="data-cards">
@@ -934,6 +997,55 @@
             
             // Apply scale
             this.style.transform = `scale(${scale})`;
+        });
+
+        // Download image functionality
+        const downloadBtn = document.getElementById('downloadBtn');
+        downloadBtn.addEventListener('click', function() {
+            // Create a temporary anchor element
+            const link = document.createElement('a');
+            link.href = mainImage.src;
+            link.download = 'SNT-Report.png'; // Set the filename for download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // Share image functionality
+        const shareBtn = document.getElementById('shareBtn');
+        shareBtn.addEventListener('click', async function() {
+            try {
+                // Check if Web Share API is supported
+                if (navigator.share) {
+                    // Fetch the image first
+                    const response = await fetch(mainImage.src);
+                    const blob = await response.blob();
+                    const file = new File([blob], 'SNT-Report.png', { type: blob.type });
+                    
+                    // Share the image
+                    await navigator.share({
+                        title: 'SNT Report - 23 April 2025',
+                        text: 'Lihat laporan SNT terbaru untuk periode 23 April 2025',
+                        files: [file]
+                    });
+                } else {
+                    // Fallback for browsers that don't support sharing files
+                    const shareUrl = window.location.href;
+                    const shareText = 'Lihat laporan SNT terbaru untuk periode 23 April 2025: ' + shareUrl;
+                    
+                    // Try to copy to clipboard
+                    if (navigator.clipboard) {
+                        await navigator.clipboard.writeText(shareText);
+                        alert('Link laporan SNT telah disalin ke clipboard!');
+                    } else {
+                        // Final fallback - open mailto link
+                        window.open(`mailto:?subject=SNT Report - 23 April 2025&body=${encodeURIComponent(shareText)}`, '_blank');
+                    }
+                }
+            } catch (error) {
+                console.error('Error sharing:', error);
+                alert('Maaf, terjadi kesalahan saat mencoba berbagi. Silakan coba lagi.');
+            }
         });
 
         // Create interactive background circles
