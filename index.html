@@ -14,13 +14,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --accent: #f72585;
-            --light: #f8f9fa;
-            --dark: #212529;
+            --primary: #4CAF50;
+            --secondary: #2E7D32;
+            --accent: #FF9800;
+            --light: #F5F5F5;
+            --dark: #333333;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --paper: #FFF9E6;
         }
 
         * {
@@ -36,11 +37,13 @@
             min-height: 100vh;
             overflow-x: hidden;
             transition: var(--transition);
+            background-image: linear-gradient(to bottom, #e6f7e6, #f5f5f5);
         }
 
         body.dark-mode {
             background-color: #121212;
             color: #f1f1f1;
+            background-image: linear-gradient(to bottom, #0a1a0a, #121212);
         }
 
         .container {
@@ -48,6 +51,18 @@
             margin: 0 auto;
             padding: 2rem;
             position: relative;
+            background-color: var(--paper);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .dark-mode .container {
+            background-color: #1E1E1E;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         /* Header with theme toggle */
@@ -57,6 +72,7 @@
             align-items: center;
             margin-bottom: 3rem;
             animation: fadeInDown 1s ease-out;
+            position: relative;
         }
 
         .greeting {
@@ -66,6 +82,8 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            position: relative;
+            z-index: 2;
         }
 
         .theme-toggle {
@@ -76,6 +94,8 @@
             color: var(--dark);
             transition: var(--transition);
             animation: pulse 2s infinite;
+            position: relative;
+            z-index: 2;
         }
 
         .dark-mode .theme-toggle {
@@ -89,6 +109,8 @@
             opacity: 0;
             animation: fadeIn 1s ease-out forwards;
             animation-delay: 0.3s;
+            position: relative;
+            z-index: 2;
         }
 
         .hero h1 {
@@ -98,6 +120,7 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            font-weight: 700;
         }
 
         .hero p {
@@ -121,6 +144,10 @@
             animation-delay: 0.6s;
             transition: var(--transition);
             cursor: pointer;
+            border: 10px solid white;
+            background-color: white;
+            position: relative;
+            z-index: 2;
         }
 
         .image-wrapper:hover {
@@ -135,14 +162,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(67, 97, 238, 0.3), rgba(247, 37, 133, 0.3));
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(255, 152, 0, 0.3));
             opacity: 0;
             transition: var(--transition);
             z-index: 1;
         }
 
         .image-wrapper:hover::before {
-            opacity: 1;
+            opacity: 0.5;
         }
 
         .main-image {
@@ -154,7 +181,7 @@
         }
 
         .image-wrapper:hover .main-image {
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .image-caption {
@@ -168,10 +195,16 @@
             transition: var(--transition);
             z-index: 2;
             color: var(--dark);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 10px;
+            margin: 0 20px;
+            width: calc(100% - 40px);
         }
 
         .dark-mode .image-caption {
             color: var(--light);
+            background-color: rgba(30, 30, 30, 0.8);
         }
 
         .image-wrapper:hover .image-caption {
@@ -232,23 +265,43 @@
             transform: scale(1.1);
         }
 
-        /* Floating particles */
-        .particles {
+        /* Natural elements animations */
+        .nature-elements {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: -1;
+            z-index: 1;
+            overflow: hidden;
         }
 
-        .particle {
+        .leaf {
             position: absolute;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: float 15s infinite linear;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            animation: falling linear infinite;
+            z-index: 1;
+        }
+
+        .cloud {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            animation: floating linear infinite;
+            z-index: 1;
+        }
+
+        .bird {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.9;
+            animation: flying linear infinite;
+            z-index: 1;
         }
 
         /* Footer */
@@ -259,6 +312,8 @@
             opacity: 0;
             animation: fadeIn 1s ease-out forwards;
             animation-delay: 0.9s;
+            position: relative;
+            z-index: 2;
         }
 
         .social-links {
@@ -272,11 +327,24 @@
             color: inherit;
             font-size: 1.5rem;
             transition: var(--transition);
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .social-links a {
+            background-color: rgba(30, 30, 30, 0.8);
         }
 
         .social-links a:hover {
             color: var(--accent);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         /* Animations */
@@ -318,18 +386,67 @@
             100% { transform: scale(1); }
         }
 
-        @keyframes float {
+        @keyframes falling {
             0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.3;
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 0;
             }
-            50% {
-                opacity: 0.1;
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
             }
             100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0.3;
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
             }
+        }
+
+        @keyframes floating {
+            0% {
+                transform: translateX(-10vw) translateY(0) scale(1);
+            }
+            50% {
+                transform: translateX(0) translateY(-10px) scale(1.05);
+            }
+            100% {
+                transform: translateX(10vw) translateY(0) scale(1);
+            }
+        }
+
+        @keyframes flying {
+            0% {
+                transform: translateX(-10vw) translateY(0) scaleX(1);
+            }
+            49% {
+                transform: translateX(10vw) translateY(-20px) scaleX(1);
+            }
+            50% {
+                transform: translateX(10vw) translateY(-20px) scaleX(-1);
+            }
+            100% {
+                transform: translateX(30vw) translateY(0) scaleX(-1);
+            }
+        }
+
+        /* Paper texture */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="rgba(0,0,0,0.05)" stroke-width="0.5"/></svg>');
+            background-size: 20px 20px;
+            opacity: 0.3;
+            pointer-events: none;
+            border-radius: 20px;
+        }
+
+        .dark-mode .container::before {
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></svg>');
         }
 
         /* Responsive */
@@ -341,6 +458,11 @@
             .greeting {
                 font-size: 1.2rem;
             }
+            
+            .container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -349,18 +471,24 @@
             }
             
             .container {
-                padding: 1.5rem;
+                padding: 1rem;
+            }
+            
+            .social-links a {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Floating particles -->
-    <div class="particles" id="particles"></div>
+    <!-- Natural elements animations -->
+    <div class="nature-elements" id="natureElements"></div>
 
     <div class="container">
         <header>
-            <div class="greeting" id="greeting">Good Morning!</div>
+            <div class="greeting" id="greeting">Selamat Pagi!</div>
             <button class="theme-toggle" id="themeToggle">
                 <i class="fas fa-moon"></i>
             </button>
@@ -374,7 +502,7 @@
 
             <div class="image-wrapper" id="imageWrapper">
                 <img src="SNT.png" alt="Sales Data Visualization" class="main-image" id="mainImage">
-                <div class="image-caption">Click to view full screen</div>
+                <div class="image-caption">Klik untuk melihat full screen</div>
             </div>
         </main>
         
@@ -403,12 +531,14 @@
             const hour = new Date().getHours();
             const greeting = document.getElementById('greeting');
             
-            if (hour < 12) {
-                greeting.textContent = 'Selamat Pagi, teman!';
+            if (hour < 11) {
+                greeting.textContent = 'Selamat Pagi! 🌞';
+            } else if (hour < 15) {
+                greeting.textContent = 'Selamat Siang! ☀️';
             } else if (hour < 18) {
-                greeting.textContent = 'Selamat Siang, teman!';
+                greeting.textContent = 'Selamat Sore! 🌇';
             } else {
-                greeting.textContent = 'Selamat Malam, teman!';
+                greeting.textContent = 'Selamat Malam! 🌙';
             }
         }
 
@@ -470,46 +600,126 @@
             }
         });
 
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = window.innerWidth < 768 ? 15 : 30;
+        // Create natural elements (leaves, clouds, birds)
+        function createNatureElements() {
+            const container = document.getElementById('natureElements');
+            const leafCount = window.innerWidth < 768 ? 5 : 10;
+            const cloudCount = window.innerWidth < 768 ? 2 : 4;
+            const birdCount = window.innerWidth < 768 ? 1 : 2;
             
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
+            // Leaf colors
+            const leafColors = [
+                'rgba(106, 168, 79, 0.7)',
+                'rgba(139, 195, 74, 0.7)',
+                'rgba(205, 220, 57, 0.7)',
+                'rgba(255, 152, 0, 0.7)',
+                'rgba(233, 30, 99, 0.7)'
+            ];
+            
+            // Create leaves
+            for (let i = 0; i < leafCount; i++) {
+                const leaf = document.createElement('div');
+                leaf.classList.add('leaf');
                 
-                // Random size between 5px and 20px
-                const size = Math.random() * 15 + 5;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
+                // Random size between 20px and 40px
+                const size = Math.random() * 20 + 20;
+                leaf.style.width = `${size}px`;
+                leaf.style.height = `${size}px`;
                 
                 // Random position
-                particle.style.left = `${Math.random() * 100}vw`;
-                particle.style.top = `${Math.random() * 100}vh`;
+                leaf.style.left = `${Math.random() * 100}vw`;
                 
                 // Random animation duration and delay
-                const duration = Math.random() * 20 + 10;
+                const duration = Math.random() * 15 + 10;
                 const delay = Math.random() * 5;
-                particle.style.animation = `float ${duration}s ${delay}s infinite linear`;
+                leaf.style.animation = `falling ${duration}s ${delay}s infinite`;
                 
-                particlesContainer.appendChild(particle);
+                // Random leaf shape using clip-path
+                const leafShape = [
+                    'polygon(50% 0%, 0% 100%, 100% 100%)',
+                    'polygon(0% 0%, 60% 0%, 100% 50%, 60% 100%, 0% 100%, 40% 50%)',
+                    'polygon(50% 0%, 80% 10%, 100% 35%, 100% 70%, 80% 90%, 50% 100%, 20% 90%, 0% 70%, 0% 35%, 20% 10%)',
+                    'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)'
+                ];
+                const randomShape = leafShape[Math.floor(Math.random() * leafShape.length)];
+                leaf.style.clipPath = randomShape;
+                leaf.style.webkitClipPath = randomShape;
+                
+                // Random color
+                leaf.style.backgroundColor = leafColors[Math.floor(Math.random() * leafColors.length)];
+                
+                // Random rotation
+                leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+                
+                container.appendChild(leaf);
+            }
+            
+            // Create clouds
+            for (let i = 0; i < cloudCount; i++) {
+                const cloud = document.createElement('div');
+                cloud.classList.add('cloud');
+                
+                // Random size between 50px and 150px
+                const size = Math.random() * 100 + 50;
+                cloud.style.width = `${size}px`;
+                cloud.style.height = `${size * 0.6}px`;
+                
+                // Random position (top)
+                cloud.style.top = `${Math.random() * 30}vh`;
+                cloud.style.left = `${Math.random() * 100}vw`;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 60 + 60;
+                const delay = Math.random() * 10;
+                cloud.style.animation = `floating ${duration}s ${delay}s infinite`;
+                
+                // Cloud shape using box-shadow
+                cloud.style.borderRadius = '50%';
+                cloud.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+                cloud.style.boxShadow = `
+                    ${size * 0.3}px ${size * 0.1}px 0 ${size * 0.1}px rgba(255, 255, 255, 0.8),
+                    ${size * -0.2}px ${size * 0.2}px 0 ${size * 0.1}px rgba(255, 255, 255, 0.8),
+                    ${size * 0.1}px ${size * -0.1}px 0 ${size * 0.07}px rgba(255, 255, 255, 0.8)
+                `;
+                
+                container.appendChild(cloud);
+            }
+            
+            // Create birds (simple V shapes)
+            for (let i = 0; i < birdCount; i++) {
+                const bird = document.createElement('div');
+                bird.classList.add('bird');
+                
+                // Size
+                bird.style.width = '30px';
+                bird.style.height = '20px';
+                
+                // Position
+                bird.style.top = `${Math.random() * 50 + 10}vh`;
+                bird.style.left = `${Math.random() * 20}vw`;
+                
+                // Animation
+                const duration = Math.random() * 30 + 30;
+                const delay = Math.random() * 10;
+                bird.style.animation = `flying ${duration}s ${delay}s infinite`;
+                
+                // Bird shape using borders
+                bird.style.borderLeft = '15px solid transparent';
+                bird.style.borderRight = '15px solid transparent';
+                bird.style.borderBottom = '10px solid rgba(66, 66, 66, 0.7)';
+                bird.style.transform = 'rotate(-45deg)';
+                
+                container.appendChild(bird);
             }
         }
 
         // Initialize everything when page loads
         window.addEventListener('DOMContentLoaded', () => {
             updateGreeting();
-            createParticles();
+            createNatureElements();
             
             // Update greeting every minute in case page stays open
             setInterval(updateGreeting, 60000);
-            
-            // Debugging - make sure elements are clickable
-            console.log("Main image:", mainImage);
-            console.log("Image wrapper:", imageWrapper);
-            mainImage.style.pointerEvents = 'auto';
-            imageWrapper.style.pointerEvents = 'auto';
         });
     </script>
 </body>
