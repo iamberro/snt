@@ -764,8 +764,42 @@
             }
             
             .data-cards {
-                grid-template-columns: 1fr;
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 1rem;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding: 0 1rem 0.8rem 1rem; /* tambahkan padding kiri kanan */
             }
+
+            .data-cards > .data-card {
+                min-width: 120px; /* Lebih kecil lagi */
+                padding: 0.8rem;  /* Padding dikecilin */
+                flex-shrink: 0;
+                scroll-snap-align: start;
+                margin: 0 auto; /* kasih margin auto biar ketengah */
+            }
+
+            .data-card h3 {
+                font-size: 0.7rem; /* Kecil */
+                margin-bottom: 0.3rem;
+            }
+
+            .data-card p {
+                font-size: 0.5rem; /* Kecil */
+            }
+
+            .data-value {
+                font-size: 1.0rem; /* Kecil */
+                margin: 0.5rem 0;
+            }
+
+            .data-card i {
+                font-size: 1.8rem; /* Icon dikecilin */
+                margin-bottom: 0.5rem;
+            }
+
             
             .image-actions {
                 flex-direction: column;
@@ -844,32 +878,23 @@
                 </div>
             </div>
 
-            <!--div class="data-cards">
+            <div class="data-cards">
                 <div class="data-card">
                     <i class="fas fa-chart-line"></i>
                     <h3>Total Sales</h3>
-                    <div class="data-value" id="totalSales">Rp 1.2M</div>
-                    <p>+12% from last week</p>
+                    <div class="data-value" id="totalSales">Rp 43.6 Jt</div>
                 </div>
                 <div class="data-card">
                     <i class="fas fa-users"></i>
-                    <h3>Customers</h3>
-                    <div class="data-value" id="totalCustomers">328</div>
-                    <p>+8% from last week</p>
+                    <h3>Person</h3>
+                    <div class="data-value" id="totalCustomers">108</div>
                 </div>
                 <div class="data-card">
                     <i class="fas fa-shopping-basket"></i>
                     <h3>Transactions</h3>
-                    <div class="data-value" id="totalTransactions">156</div>
-                    <p>+5% from last week</p>
+                    <div class="data-value" id="totalTransactions">226</div>
                 </div>
-                <div class="data-card">
-                    <i class="fas fa-percentage"></i>
-                    <h3>Conversion</h3>
-                    <div class="data-value" id="conversionRate">47.5%</div>
-                    <p>+3.2% from last week</p>
-                </div>
-            </div-->
+            </div>
 
             <div class="image-wrapper" id="imageWrapper">
                 <img src="SNT.png" alt="Sales Data Visualization" class="main-image" id="mainImage">
