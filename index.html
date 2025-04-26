@@ -1104,58 +1104,58 @@
         }
 
         // Create floating 3D elements
-        function createFloatingElements() {
-            const container = document.getElementById('floatingElements');
-            const shapes = ['circle', 'square', 'triangle', 'hexagon'];
-            const colors = ['rgba(0, 230, 118, 0.3)', 'rgba(255, 145, 0, 0.3)', 'rgba(0, 200, 83, 0.3)'];
+        //function createFloatingElements() {
+            //const container = document.getElementById('floatingElements');
+            //const shapes = ['circle', 'square', 'triangle', 'hexagon'];
+            //const colors = ['rgba(0, 230, 118, 0.3)', 'rgba(255, 145, 0, 0.3)', 'rgba(0, 200, 83, 0.3)'];
             
-            for (let i = 0; i < 15; i++) {
-                const element = document.createElement('div');
-                element.classList.add('floating-element');
+            //for (let i = 0; i < 15; i++) {
+                //const element = document.createElement('div');
+                //element.classList.add('floating-element');
                 
-                // Random size between 20px and 80px
-                const size = Math.random() * 60 + 20;
-                element.style.width = `${size}px`;
-                element.style.height = `${size}px`;
+                //// Random size between 20px and 80px
+                //const size = Math.random() * 60 + 20;
+                //element.style.width = `${size}px`;
+                //element.style.height = `${size}px`;
                 
-                // Random position
-                element.style.left = `${Math.random() * 100}vw`;
-                element.style.top = `${Math.random() * 100}vh`;
+                //// Random position
+                //element.style.left = `${Math.random() * 100}vw`;
+                //element.style.top = `${Math.random() * 100}vh`;
                 
-                // Random animation duration and delay
-                const duration = Math.random() * 30 + 20;
-                const delay = Math.random() * 10;
-                element.style.animation = `floatingElement ${duration}s ${delay}s infinite ease-in-out`;
+                //// Random animation duration and delay
+                //const duration = Math.random() * 30 + 20;
+                //const delay = Math.random() * 10;
+                //element.style.animation = `floatingElement ${duration}s ${delay}s infinite ease-in-out`;
                 
-                // Random shape
-                const shape = shapes[Math.floor(Math.random() * shapes.length)];
-                switch(shape) {
-                    case 'circle':
-                        element.style.borderRadius = '50%';
-                        break;
-                    case 'square':
-                        element.style.borderRadius = '5px';
-                        break;
-                    case 'triangle':
-                        element.style.width = '0';
-                        element.style.height = '0';
-                        element.style.borderLeft = `${size/2}px solid transparent`;
-                        element.style.borderRight = `${size/2}px solid transparent`;
-                        element.style.borderBottom = `${size}px solid ${colors[Math.floor(Math.random() * colors.length)]}`;
-                        break;
-                    case 'hexagon':
-                        element.style.clipPath = 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)';
-                        element.style.webkitClipPath = 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)';
-                        break;
-                }
+                //// Random shape
+                //const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                //switch(shape) {
+                    //case 'circle':
+                        //element.style.borderRadius = '50%';
+                        //break;
+                    //case 'square':
+                        //element.style.borderRadius = '5px';
+                        //break;
+                    //case 'triangle':
+                        //element.style.width = '0';
+                        //element.style.height = '0';
+                        //element.style.borderLeft = `${size/2}px solid transparent`;
+                        //element.style.borderRight = `${size/2}px solid transparent`;
+                        //element.style.borderBottom = `${size}px solid ${colors[Math.floor(Math.random() * colors.length)]}`;
+                        //break;
+                    //case 'hexagon':
+                        //element.style.clipPath = 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)';
+                        //element.style.webkitClipPath = 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)';
+                        //break;
+                //}
                 
-                if (shape !== 'triangle') {
-                    element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                }
+                //if (shape !== 'triangle') {
+                    //element.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                //}
                 
-                container.appendChild(element);
-            }
-        }
+                //container.appendChild(element);
+            //}
+        //}
 
         // Initialize particles.js
         function initParticles() {
