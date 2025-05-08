@@ -69,7 +69,7 @@
             margin: 2rem auto;
             padding: 3rem;
             position: relative;
-            background-color: var(--paper);
+            background-color: rgba(30, 30, 30, 0.95); /* Ubah opacity menjadi lebih solid */
             border-radius: 30px;
             box-shadow: 
                 var(--shadow),
@@ -79,13 +79,12 @@
             transform-style: preserve-3d;
             animation: breathe 8s ease-in-out infinite;
             z-index: 10;
-            backdrop-filter: blur(0px);
-            background: rgba(30, 30, 30, 0.8);
+            /* Hapus backdrop-filter */
             border: 1px solid rgba(0, 230, 118, 0.2);
         }
 
         .light-mode .container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95); /* Lebih solid di light mode */
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
@@ -317,7 +316,6 @@
             border-radius: 10px;
             margin: 0 30px;
             width: calc(100% - 60px);
-            backdrop-filter: blur(0px);
             border: 1px solid rgba(0, 230, 118, 0.3);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
@@ -586,7 +584,6 @@
             box-shadow: 
                 0 5px 15px rgba(0, 0, 0, 0.2),
                 0 0 10px rgba(0, 230, 118, 0.3);
-            backdrop-filter: blur(0px);
             border: 1px solid rgba(0, 230, 118, 0.2);
             transform: translateZ(0);
             position: relative;
