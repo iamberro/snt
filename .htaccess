@@ -1,16 +1,16 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # 1. Redirect .html/.php ke clean URL (Permanent 301)
+  # Redirect .html/.php ke clean URL (Opsional)
   RewriteRule ^(.*)\.html$ /$1 [R=301,L]
   RewriteRule ^(.*)\.php$ /$1 [R=301,L]
 
-  # 2. Internal Rewrite (Agar file asli tetap terbaca)
+  # Internal rewrite untuk menghilangkan ekstensi
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\.html -f
+  RewriteCond %{REQUEST_FILENAME}.html -f
   RewriteRule ^(.*)$ $1.html [L]
 
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}\.php -f
+  RewriteCond %{REQUEST_FILENAME}.php -f
   RewriteRule ^(.*)$ $1.php [L]
 </IfModule>
