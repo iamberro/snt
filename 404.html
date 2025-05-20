@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    // Ambil path URL (misal: /barcode)
+    const path = window.location.pathname; // Hasil: "/barcode" (tanpa "/barcode" di akhir)
+    
+    // Redirect ke file .html (misal: /barcode → /barcode.html)
+    fetch(`${path}.html`)
+      .then(res => {
+        if (res.ok) window.location.href = `${path}.html`;
+        else window.location.href = "/"; // Fallback ke home
+      });
+  </script>
+</head>
+<body>
+  Redirecting...
+</body>
+</html>
