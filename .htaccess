@@ -1,12 +1,15 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Hilangkan .html
+  # 1. Redirect .html/.php ke clean URL (Permanent 301)
+  RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+  RewriteRule ^(.*)\.php$ /$1 [R=301,L]
+
+  # 2. Internal Rewrite (Agar file asli tetap terbaca)
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}\.html -f
   RewriteRule ^(.*)$ $1.html [L]
 
-  # Hilangkan .php
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME}\.php -f
   RewriteRule ^(.*)$ $1.php [L]
