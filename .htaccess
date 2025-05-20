@@ -1,4 +1,16 @@
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule ^barcode$ barcode.html [L]
+  RewriteEngine On
+
+  # Redirect .html/.php ke clean URL (Opsional)
+  RewriteRule ^(.*)\.html$ /$1 [R=301,L]
+  RewriteRule ^(.*)\.php$ /$1 [R=301,L]
+
+  # Internal rewrite untuk menghilangkan ekstensi
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME}.php -f
+  RewriteRule ^(.*)$ $1.php [L]
 </IfModule>
